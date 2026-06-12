@@ -108,7 +108,7 @@ export function Header() {
           </nav>
 
           {/* CTA + phone + burger */}
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 lg:ml-6">
             {/* Phone button */}
             <div className="relative hidden md:block shrink-0" ref={phoneRef}>
               <button
