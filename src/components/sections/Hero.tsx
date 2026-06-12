@@ -5,6 +5,7 @@ import { useLenis } from 'lenis/react'
 import { Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Mascot } from '@/components/shared/Mascot'
+import { Photo } from '@/components/shared/Photo'
 import { HERO } from '@/lib/content'
 
 export function Hero() {
@@ -57,14 +58,14 @@ export function Hero() {
             {/* Text */}
             <div>
               <motion.div {...fadeUp(0)}>
-                <span className="inline-block bg-[--brand-sky] text-[--brand-navy] text-xs font-semibold uppercase tracking-[0.08em] rounded-full px-4 py-2 mb-6">
+                <span className="inline-block bg-[var(--brand-sky)] text-[var(--brand-navy)] text-xs font-semibold uppercase tracking-[0.08em] rounded-full px-4 py-2 mb-6">
                   {HERO.eyebrow}
                 </span>
               </motion.div>
 
               <motion.h1
                 {...fadeUp(0.1)}
-                className="text-[--ink] mb-6"
+                className="text-[var(--ink)] mb-6"
                 style={{
                   fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
                   lineHeight: 1.05,
@@ -77,7 +78,7 @@ export function Hero() {
 
               <motion.p
                 {...fadeUp(0.2)}
-                className="text-[--muted] text-lg md:text-xl leading-relaxed mb-8 max-w-lg"
+                className="text-[var(--muted)] text-lg md:text-xl leading-relaxed mb-8 max-w-lg"
               >
                 {HERO.subtitle}
               </motion.p>
@@ -85,7 +86,7 @@ export function Hero() {
               <motion.div {...fadeUp(0.3)} className="flex flex-col sm:flex-row gap-3 mb-10">
                 <Button
                   size="lg"
-                  className="bg-[--brand-red] hover:bg-red-700 text-white shadow-md"
+                  className="bg-[var(--brand-red)] hover:bg-red-700 text-white shadow-md"
                   onClick={() => scrollTo('contact')}
                 >
                   {HERO.ctaPrimary}
@@ -104,11 +105,11 @@ export function Hero() {
                 {HERO.trustBadges.map((badge) => (
                   <div
                     key={badge.label}
-                    className="flex items-center gap-2 bg-[--brand-sky] rounded-full px-4 py-2"
+                    className="flex items-center gap-2 bg-[var(--brand-sky)] rounded-full px-4 py-2"
                   >
-                    <div className="w-2 h-2 rounded-full bg-[--brand-navy]" />
-                    <span className="text-sm font-semibold text-[--brand-navy]">{badge.label}</span>
-                    <span className="text-xs text-[--muted]">{badge.sub}</span>
+                    <div className="w-2 h-2 rounded-full bg-[var(--brand-navy)]" />
+                    <span className="text-sm font-semibold text-[var(--brand-navy)]">{badge.label}</span>
+                    <span className="text-xs text-[var(--muted)]">{badge.sub}</span>
                   </div>
                 ))}
               </motion.div>
@@ -121,27 +122,29 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
               className="flex justify-center items-center relative"
             >
-              {/* Photo placeholder */}
-              {/* TODO: замените на реальное фото из /public/photos/hero.jpg (~1600×1200) */}
-              <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-[--brand-sky] to-white border border-[--border] shadow-xl flex items-center justify-center">
-                <div className="text-center text-[--muted] p-8">
-                  <div className="text-6xl mb-4" aria-hidden="true">📸</div>
-                  <p className="text-sm font-medium">Фото: дети на занятии</p>
-                  <p className="text-xs mt-1 opacity-60">Рекомендуемый размер: 800×1000px</p>
-                </div>
+              {/* Реальное фото: девочки играют за столом */}
+              <div className="relative w-full max-w-md">
+                <Photo
+                  src="/photos/hero.jpg"
+                  alt="Дети на занятии английским в студии Sound English"
+                  aspect="aspect-[4/5]"
+                  priority
+                  className="shadow-xl"
+                  sizes="(max-width: 1024px) 90vw, 45vw"
+                />
 
                 {/* Mascot overlay */}
                 <div className="absolute -bottom-4 -right-4 z-10">
-                  <Mascot size={180} />
+                  <Mascot size={150} />
                 </div>
 
                 {/* UK flag speech bubble */}
                 <div
-                  className="absolute top-4 left-4 bg-white rounded-2xl shadow-md px-3 py-2 flex items-center gap-2"
+                  className="absolute top-4 left-4 bg-white rounded-2xl shadow-md px-3 py-2 flex items-center gap-2 z-10"
                   aria-hidden="true"
                 >
                   <span className="text-xl">🇬🇧</span>
-                  <span className="text-xs font-semibold text-[--brand-navy]">English</span>
+                  <span className="text-xs font-semibold text-[var(--brand-navy)]">English</span>
                 </div>
               </div>
             </motion.div>
@@ -154,21 +157,21 @@ export function Hero() {
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: showMobileCta ? 0 : 80, opacity: showMobileCta ? 1 : 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur border-t border-[--border] pb-safe"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur border-t border-[var(--border)] pb-safe"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         aria-hidden={!showMobileCta}
       >
         <div className="flex gap-2 p-3">
           <a
             href="tel:+79204282912"
-            className="flex-1 flex items-center justify-center gap-2 h-12 rounded-full border-2 border-[--border] font-semibold text-[--ink] text-sm hover:border-[--brand-navy] transition-colors"
+            className="flex-1 flex items-center justify-center gap-2 h-12 rounded-full border-2 border-[var(--border)] font-semibold text-[var(--ink)] text-sm hover:border-[var(--brand-navy)] transition-colors"
           >
             <Phone className="w-4 h-4" />
             Позвонить
           </a>
           <button
             onClick={() => scrollTo('contact')}
-            className="flex-1 flex items-center justify-center h-12 rounded-full bg-[--brand-red] text-white font-semibold text-sm hover:bg-red-700 transition-colors"
+            className="flex-1 flex items-center justify-center h-12 rounded-full bg-[var(--brand-red)] text-white font-semibold text-sm hover:bg-red-700 transition-colors"
           >
             Записаться
           </button>

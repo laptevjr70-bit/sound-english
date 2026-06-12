@@ -45,7 +45,7 @@ export function SectionHeading({ eyebrow, h2, subtitle, className, align = 'cent
           data-reveal
           className={cn(
             'inline-block text-[0.875rem] uppercase tracking-[0.08em] font-semibold mb-3',
-            light ? 'text-white/70' : 'text-[--brand-blue]'
+            light ? 'text-white/70' : 'text-[var(--brand-blue)]'
           )}
         >
           {eyebrow}
@@ -55,7 +55,7 @@ export function SectionHeading({ eyebrow, h2, subtitle, className, align = 'cent
         data-reveal
         className={cn(
           'font-semibold leading-[1.1]',
-          light ? 'text-white' : 'text-[--ink]',
+          light ? 'text-white' : 'text-[var(--ink)]',
         )}
         style={{
           fontSize: 'clamp(2rem, 4vw, 3.25rem)',
@@ -70,7 +70,7 @@ export function SectionHeading({ eyebrow, h2, subtitle, className, align = 'cent
           className={cn(
             'mt-4 text-lg leading-relaxed max-w-2xl',
             align === 'center' && 'mx-auto',
-            light ? 'text-white/80' : 'text-[--muted]'
+            light ? 'text-white/80' : 'text-[var(--muted)]'
           )}
         >
           {subtitle}

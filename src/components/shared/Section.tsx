@@ -15,8 +15,8 @@ export function Section({ id, className, children, variant = 'white' }: SectionP
         'py-20 md:py-28 lg:py-32',
         {
           white: 'bg-white',
-          sky: 'bg-[--brand-sky]',
-          navy: 'bg-[--brand-navy] text-white',
+          sky: 'bg-[var(--brand-sky)]',
+          navy: 'bg-[var(--brand-navy)] text-white',
         }[variant],
         className
       )}

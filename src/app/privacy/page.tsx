@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           <div className="mb-8">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-[--muted] hover:text-[--brand-navy] transition-colors font-medium"
+              className="inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--brand-navy)] transition-colors font-medium"
             >
               <ArrowLeft className="w-4 h-4" />
               На главную
@@ -55,13 +55,13 @@ export default function PrivacyPage() {
             ))}
           </div>
 
-          <div className="mt-12 pt-8 border-t border-[--border] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <p className="text-sm text-[--muted]">
+          <div className="mt-12 pt-8 border-t border-[var(--border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <p className="text-sm text-[var(--muted)]">
               Последнее обновление: {PRIVACY_CONTENT.lastUpdated}
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-[--brand-navy] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[--brand-blue] transition-colors"
+              className="inline-flex items-center gap-2 bg-[var(--brand-navy)] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[var(--brand-blue)] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               На главную

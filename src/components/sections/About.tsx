@@ -1,12 +1,15 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { MessageCircle, Users, Gamepad2, TrendingUp } from 'lucide-react'
+import { MessageCircle, Users, Gamepad2, TrendingUp, ChevronDown } from 'lucide-react'
 import { Section } from '@/components/shared/Section'
 import { SectionHeading } from '@/components/shared/SectionHeading'
+import { Photo } from '@/components/shared/Photo'
 import { ABOUT } from '@/lib/content'
+import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,6 +22,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export function About() {
   const cardsRef = useRef<HTMLDivElement>(null)
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   useGSAP(() => {
     if (!cardsRef.current) return
@@ -30,62 +34,97 @@ export function About() {
         stagger: 0.12,
         duration: 0.6,
         ease: 'power2.out',
-        scrollTrigger: { trigger: cardsRef.current, start: 'top 80%', once: true },
+        scrollTrigger: { trigger: cardsRef.current, start: 'top 85%', once: true },
       }
     )
   }, { scope: cardsRef })
 
   return (
     <Section id="about" variant="sky">
-      <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
+      <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-14 md:mb-16">
         <div>
-          <SectionHeading
-            eyebrow={ABOUT.eyebrow}
-            h2={ABOUT.h2}
-            align="left"
-          />
-          <p className="text-[--muted] text-lg leading-relaxed">{ABOUT.body}</p>
+          <SectionHeading eyebrow={ABOUT.eyebrow} h2={ABOUT.h2} align="left" />
+          <p className="text-[var(--muted)] text-lg leading-relaxed">{ABOUT.body}</p>
         </div>
 
-        {/* Photo / illustration */}
+        {/* Реальное фото: ученики за столом */}
         <div className="relative">
-          {/* TODO: замените на реальное фото из /public/photos/about.jpg (~800×600) */}
-          <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-white to-[--brand-sky] border border-[--border] shadow-lg flex items-center justify-center">
-            <div className="text-center text-[--muted] p-8">
-              <div className="text-5xl mb-3" aria-hidden="true">🏫</div>
-              <p className="text-sm font-medium">Фото: атмосфера класса / студии</p>
-              <p className="text-xs mt-1 opacity-60">Рекомендуемый размер: 800×600px</p>
-            </div>
-          </div>
+          <Photo
+            src="/photos/about.jpg"
+            alt="Ученики Sound English за работой на занятии"
+            aspect="aspect-[4/3]"
+            sizes="(max-width: 1024px) 90vw, 45vw"
+          />
           {/* Decorative badge */}
           <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-2" aria-hidden="true">
             <span className="text-2xl">🇬🇧</span>
             <div>
-              <p className="text-xs font-semibold text-[--brand-navy]">Sound English</p>
-              <p className="text-xs text-[--muted]">Воронеж</p>
+              <p className="text-xs font-semibold text-[var(--brand-navy)]">Sound English</p>
+              <p className="text-xs text-[var(--muted)]">Воронеж</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Advantage cards */}
-      <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {ABOUT.advantages.map((adv) => (
-          <div
-            key={adv.title}
-            data-card
-            className="bg-white rounded-2xl p-6 border border-[--border] hover:-translate-y-1 transition-transform duration-250"
-            style={{ boxShadow: 'var(--shadow-card)' }}
-          >
-            <div className="w-12 h-12 rounded-xl bg-[--brand-sky] flex items-center justify-center text-[--brand-navy] mb-4">
-              {iconMap[adv.icon]}
-            </div>
-            <h3 className="font-semibold text-[--ink] mb-2" style={{ fontFamily: 'var(--font-fredoka)', fontSize: '1.1rem' }}>
-              {adv.title}
-            </h3>
-            <p className="text-sm text-[--muted] leading-relaxed">{adv.body}</p>
-          </div>
-        ))}
+      {/* Advantage cards — кликабельные, раскрываются */}
+      <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+        {ABOUT.advantages.map((adv, i) => {
+          const isOpen = openIndex === i
+          return (
+            <motion.button
+              key={adv.title}
+              data-card
+              type="button"
+              onClick={() => setOpenIndex(isOpen ? null : i)}
+              aria-expanded={isOpen}
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+              className={cn(
+                'text-left bg-white rounded-2xl p-6 border w-full cursor-pointer transition-colors duration-200',
+                isOpen
+                  ? 'border-[var(--brand-navy)] ring-2 ring-[var(--brand-navy)]/30'
+                  : 'border-[var(--border)] hover:border-[var(--brand-blue)] hover:bg-[var(--brand-sky)]/50'
+              )}
+              style={{ boxShadow: 'var(--shadow-card)' }}
+            >
+              <div className="flex items-start justify-between gap-2 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-[var(--brand-sky)] flex items-center justify-center text-[var(--brand-navy)] shrink-0">
+                  {iconMap[adv.icon]}
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'w-5 h-5 text-[var(--muted)] shrink-0 transition-transform duration-300 mt-1',
+                    isOpen && 'rotate-180'
+                  )}
+                  aria-hidden="true"
+                />
+              </div>
+              <h3
+                className="font-semibold text-[var(--ink)] mb-2"
+                style={{ fontFamily: 'var(--font-fredoka)', fontSize: '1.1rem' }}
+              >
+                {adv.title}
+              </h3>
+              <p className="text-sm text-[var(--muted)] leading-relaxed">{adv.body}</p>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                  >
+                    <p className="text-sm text-[var(--ink)] leading-relaxed mt-4 pt-4 border-t border-[var(--border)]">
+                      {adv.detail}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          )
+        })}
       </div>
     </Section>
   )

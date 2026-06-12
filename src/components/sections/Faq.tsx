@@ -25,7 +25,7 @@ export function Faq() {
         subtitle="Ответили на самые популярные вопросы"
       />
       <div className="max-w-2xl mx-auto">
-        <Accordion type="single" collapsible className="bg-white rounded-2xl border border-[--border] px-6 divide-y divide-[--border]">
+        <Accordion type="single" collapsible className="bg-white rounded-2xl border border-[var(--border)] px-6 divide-y divide-[var(--border)]">
           {FAQ_ITEMS.map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`} className="border-b-0">
               <AccordionTrigger>{item.q}</AccordionTrigger>
@@ -34,11 +34,11 @@ export function Faq() {
           ))}
         </Accordion>
 
-        <p className="text-center text-[--muted] mt-8">
+        <p className="text-center text-[var(--muted)] mt-8">
           Не нашли ответ?{' '}
           <button
             onClick={scrollToContact}
-            className="text-[--brand-navy] font-semibold underline underline-offset-4 hover:opacity-75"
+            className="text-[var(--brand-navy)] font-semibold underline underline-offset-4 hover:opacity-75"
           >
             Напишите нам — отвечаем быстро.
           </button>

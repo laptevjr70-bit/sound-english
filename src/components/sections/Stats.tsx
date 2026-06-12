@@ -15,11 +15,11 @@ export function Stats() {
     if (!ref.current) return
     gsap.fromTo(
       ref.current.querySelectorAll('[data-stat]'),
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 24 },
       {
         opacity: 1, y: 0,
-        stagger: 0.1,
-        duration: 0.5,
+        stagger: 0.12,
+        duration: 0.55,
         ease: 'power2.out',
         scrollTrigger: { trigger: ref.current, start: 'top 85%', once: true },
       }
@@ -27,19 +27,19 @@ export function Stats() {
   }, { scope: ref })
 
   return (
-    <section className="py-16 bg-[--brand-navy]" aria-label="Цифры и факты">
+    <section className="py-16 md:py-20 bg-white border-y border-[var(--border)]" aria-label="Цифры и факты">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-12">
           {STATS.map((stat) => (
             <div key={stat.label} data-stat className="text-center">
               <p
-                className="text-white mb-2"
+                className="mb-2"
                 style={{
                   fontSize: 'clamp(2.5rem, 5vw, 4rem)',
                   fontWeight: 700,
                   fontFamily: 'var(--font-fredoka)',
                   lineHeight: 1,
-                  color: 'var(--brand-gold)',
+                  color: stat.color === 'red' ? 'var(--brand-red)' : 'var(--brand-navy)',
                 }}
               >
                 <Counter
@@ -50,7 +50,9 @@ export function Stats() {
                   display={stat.display}
                 />
               </p>
-              <p className="text-white/70 text-sm leading-snug">{stat.label}</p>
+              <p className="text-[var(--ink)] text-sm md:text-base font-medium leading-snug max-w-[10rem] mx-auto">
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>

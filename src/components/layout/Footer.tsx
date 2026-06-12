@@ -1,36 +1,31 @@
 'use client'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Phone, MapPin, ExternalLink } from 'lucide-react'
 import { NAV_LINKS, SITE_CONFIG } from '@/lib/content'
 
 export function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="bg-[--ink] text-white">
+    <footer className="bg-[var(--ink)] text-white">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 relative bg-white/10 rounded-full p-1">
-                <Image
-                  src="/brand/logo-sound-english.png"
-                  alt="Sound English"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
+            <div className="flex items-center gap-2 mb-4">
+              <span
+                className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[var(--brand-red)] text-white font-bold text-lg"
+                style={{ fontFamily: 'var(--font-fredoka)' }}
+                aria-hidden="true"
+              >
+                S
+              </span>
               <span className="font-semibold text-xl" style={{ fontFamily: 'var(--font-fredoka)' }}>
                 Sound English
               </span>
             </div>
-            <p className="text-white/60 text-sm leading-relaxed mb-6">
+            <p className="text-white/70 text-sm leading-relaxed max-w-xs">
               Детская студия английского языка в Воронеже. Учим говорить, играя.
             </p>
-            {/* Mascot small */}
-            <div className="text-4xl" aria-hidden="true">🦊</div>
           </div>
 
           {/* Navigation */}
@@ -39,7 +34,7 @@ export function Footer() {
             <ul className="space-y-2">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-white/60 hover:text-white text-sm transition-colors">
+                  <Link href={link.href} className="text-white/75 hover:text-white text-sm transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -54,7 +49,7 @@ export function Footer() {
               <li>
                 <a
                   href={SITE_CONFIG.phoneHref}
-                  className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors"
+                  className="flex items-center gap-2 text-white/75 hover:text-white text-sm transition-colors"
                 >
                   <Phone className="w-4 h-4 shrink-0" />
                   {SITE_CONFIG.phone}
@@ -65,14 +60,14 @@ export function Footer() {
                   href={SITE_CONFIG.vk}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors"
+                  className="flex items-center gap-2 text-white/75 hover:text-white text-sm transition-colors"
                 >
                   <ExternalLink className="w-4 h-4 shrink-0" />
                   ВКонтакте {SITE_CONFIG.vkHandle}
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-2 text-white/60 text-sm">
+                <div className="flex items-start gap-2 text-white/75 text-sm">
                   <MapPin className="w-4 h-4 shrink-0 mt-0.5" />
                   <span>{SITE_CONFIG.city}, {SITE_CONFIG.address}</span>
                 </div>
@@ -81,14 +76,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-sm">
+        <div className="mt-12 pt-8 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+          <p className="text-white/75 text-sm">
             © {year} Sound English. Все права защищены.
           </p>
-          <Link href="/privacy" className="text-white/40 hover:text-white/70 text-sm transition-colors underline">
+          <Link
+            href="/privacy"
+            className="text-white/80 hover:text-white text-sm transition-colors underline underline-offset-4 font-medium"
+          >
             Политика конфиденциальности
           </Link>
-          <p className="text-white/30 text-sm italic">Растём вместе с английским</p>
+          <p className="text-white/75 text-sm italic">Растём вместе с английским</p>
         </div>
       </div>
     </footer>

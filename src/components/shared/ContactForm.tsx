@@ -134,13 +134,13 @@ export function ContactForm() {
           aria-required="true"
           className="mt-0.5 shrink-0"
         />
-        <label htmlFor="pdConsent" className="text-sm text-[--muted] leading-snug cursor-pointer">
+        <label htmlFor="pdConsent" className="text-sm text-[var(--muted)] leading-snug cursor-pointer">
           Я даю согласие на обработку моих персональных данных в соответствии с{' '}
           <Link
             href="/privacy"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline text-[--brand-navy] hover:opacity-75"
+            className="underline text-[var(--brand-navy)] hover:opacity-75"
           >
             Политикой конфиденциальности
           </Link>
@@ -154,13 +154,13 @@ export function ContactForm() {
       <Button
         type="submit"
         disabled={!pdConsent || isSubmitting}
-        className="w-full bg-[--brand-red] hover:bg-red-700 text-white mt-2"
+        className="w-full bg-[var(--brand-red)] hover:bg-red-700 text-white mt-2"
         size="lg"
       >
         {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
       </Button>
 
-      <p className="text-xs text-[--muted]">
+      <p className="text-xs text-[var(--muted)]">
         Нажимая кнопку, вы подтверждаете, что ознакомились с Политикой конфиденциальности и даёте согласие на обработку персональных данных.
       </p>
     </form>

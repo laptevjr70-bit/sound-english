@@ -44,8 +44,8 @@ export function Summer() {
     >
       {/* Blobs */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        <div className="blob absolute top-[-20%] right-[-10%] w-[500px] h-[500px] opacity-10" style={{ background: 'var(--brand-gold)' }} />
-        <div className="blob absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] opacity-10" style={{ background: 'var(--brand-orange)' }} />
+        <div className="blob absolute top-[-20%] right-[-10%] w-[500px] h-[500px] opacity-15" style={{ background: 'var(--brand-blue)' }} />
+        <div className="blob absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] opacity-10" style={{ background: '#ffffff' }} />
       </div>
 
       <div ref={ref} className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,7 +57,7 @@ export function Summer() {
               {SUMMER.eyebrow}
             </div>
 
-            <p data-reveal className="text-[--brand-gold] text-xl font-semibold mb-3" style={{ fontFamily: 'var(--font-fredoka)' }}>
+            <p data-reveal className="text-white text-xl font-semibold mb-3" style={{ fontFamily: 'var(--font-fredoka)' }}>
               {SUMMER.slogan}
             </p>
 
@@ -74,15 +74,15 @@ export function Summer() {
               {SUMMER.h2}
             </h2>
 
-            <p data-reveal className="text-white/70 text-lg mb-8 leading-relaxed">
+            <p data-reveal className="text-white/85 text-lg mb-8 leading-relaxed">
               {SUMMER.subtitle}
             </p>
 
             <ul data-reveal className="space-y-3 mb-8">
               {SUMMER.activities.map((act) => (
-                <li key={act} className="flex items-center gap-3 text-white/85">
-                  <div className="w-6 h-6 rounded-full bg-[--brand-gold]/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3.5 h-3.5 text-[--brand-gold]" />
+                <li key={act} className="flex items-center gap-3 text-white/90">
+                  <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 text-white" />
                   </div>
                   <span className="text-base">{act}</span>
                 </li>
@@ -90,12 +90,12 @@ export function Summer() {
             </ul>
 
             <div data-reveal className="bg-white/10 rounded-2xl p-4 mb-8 border border-white/20">
-              <p className="text-white/70 text-sm">{SUMMER.address}</p>
+              <p className="text-white/85 text-sm">{SUMMER.address}</p>
             </div>
 
             <div data-reveal>
               <Button
-                className="bg-[--brand-gold] hover:bg-yellow-400 text-[--ink] font-bold shadow-lg"
+                className="bg-[var(--brand-red)] hover:bg-red-700 text-white font-bold shadow-lg"
                 size="lg"
                 onClick={scrollToContact}
               >

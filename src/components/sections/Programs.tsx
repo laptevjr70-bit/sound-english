@@ -50,41 +50,41 @@ export function Programs() {
             data-prog
             className={cn(
               'relative flex flex-col bg-white rounded-2xl border overflow-hidden',
-              prog.hit ? 'border-[--brand-navy] ring-2 ring-[--brand-navy]' : 'border-[--border]'
+              prog.hit ? 'border-[var(--brand-navy)] ring-2 ring-[var(--brand-navy)]' : 'border-[var(--border)]'
             )}
             style={{ boxShadow: 'var(--shadow-card)' }}
           >
             {/* Top color strip */}
             <div className={cn('h-1', {
-              'bg-[--brand-lime]': prog.badgeColor === 'lime',
-              'bg-[--brand-navy]': prog.badgeColor === 'navy',
-              'bg-[--brand-blue]': prog.badgeColor === 'blue',
+              'bg-[var(--brand-lime)]': prog.badgeColor === 'lime',
+              'bg-[var(--brand-navy)]': prog.badgeColor === 'navy',
+              'bg-[var(--brand-blue)]': prog.badgeColor === 'blue',
             })} />
 
             {prog.hit && (
-              <div className="absolute top-3 right-3 bg-[--brand-navy] text-white text-xs font-semibold rounded-full px-3 py-1">
+              <div className="absolute top-3 right-3 bg-[var(--brand-navy)] text-white text-xs font-semibold rounded-full px-3 py-1">
                 Хит
               </div>
             )}
 
             <div className="p-6 md:p-8 flex flex-col flex-1">
               <div className={cn('inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold w-fit mb-4', {
-                'bg-[--brand-lime]/20 text-green-800': prog.badgeColor === 'lime',
-                'bg-[--brand-navy]/10 text-[--brand-navy]': prog.badgeColor === 'navy',
-                'bg-[--brand-blue]/10 text-[--brand-blue]': prog.badgeColor === 'blue',
+                'bg-[var(--brand-lime)]/20 text-green-800': prog.badgeColor === 'lime',
+                'bg-[var(--brand-navy)]/10 text-[var(--brand-navy)]': prog.badgeColor === 'navy',
+                'bg-[var(--brand-blue)]/10 text-[var(--brand-blue)]': prog.badgeColor === 'blue',
               })}>
                 {prog.badge}
               </div>
 
-              <h3 className="mb-3 text-[--ink]" style={{ fontFamily: 'var(--font-fredoka)', fontSize: '1.25rem', fontWeight: 600 }}>
+              <h3 className="mb-3 text-[var(--ink)]" style={{ fontFamily: 'var(--font-fredoka)', fontSize: '1.25rem', fontWeight: 600 }}>
                 {prog.title}
               </h3>
-              <p className="text-[--muted] text-sm leading-relaxed mb-6">{prog.desc}</p>
+              <p className="text-[var(--muted)] text-sm leading-relaxed mb-6">{prog.desc}</p>
 
               <ul className="space-y-2 mb-8 flex-1">
                 {prog.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-2 text-sm text-[--ink]">
-                    <Check className="w-4 h-4 text-[--brand-navy] shrink-0" />
+                  <li key={b} className="flex items-center gap-2 text-sm text-[var(--ink)]">
+                    <Check className="w-4 h-4 text-[var(--brand-navy)] shrink-0" />
                     {b}
                   </li>
                 ))}
@@ -92,8 +92,8 @@ export function Programs() {
 
               <Button
                 className={cn('w-full', prog.hit
-                  ? 'bg-[--brand-navy] hover:bg-[--brand-blue] text-white'
-                  : 'bg-white border-2 border-[--brand-navy] text-[--brand-navy] hover:bg-[--brand-sky]'
+                  ? 'bg-[var(--brand-navy)] hover:bg-[var(--brand-blue)] text-white'
+                  : 'bg-white border-2 border-[var(--brand-navy)] text-[var(--brand-navy)] hover:bg-[var(--brand-sky)]'
                 )}
                 onClick={scrollToContact}
               >
@@ -104,11 +104,11 @@ export function Programs() {
         ))}
       </div>
 
-      <p className="text-center text-[--muted] text-base">
+      <p className="text-center text-[var(--muted)] text-base">
         Не знаете, что выбрать?{' '}
         <button
           onClick={scrollToContact}
-          className="text-[--brand-navy] font-semibold underline underline-offset-4 hover:opacity-75 transition-opacity"
+          className="text-[var(--brand-navy)] font-semibold underline underline-offset-4 hover:opacity-75 transition-opacity"
         >
           Напишите нам — поможем определить уровень и подобрать формат.
         </button>

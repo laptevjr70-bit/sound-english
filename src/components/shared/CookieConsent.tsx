@@ -35,12 +35,12 @@ export function CookieConsent() {
         role="dialog"
         aria-label="Согласие на использование файлов cookie"
         aria-live="polite"
-        className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 bg-white border border-[--border] rounded-2xl shadow-xl p-5"
+        className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 bg-white border border-[var(--border)] rounded-2xl shadow-xl p-5"
       >
-        <p className="text-sm text-[--muted] mb-4 leading-relaxed">
+        <p className="text-sm text-[var(--muted)] mb-4 leading-relaxed">
           Мы используем cookies для улучшения работы сайта. Технические cookies необходимы для его
           функционирования; аналитические — помогают нам его улучшать.{' '}
-          <Link href="/privacy" className="underline text-[--brand-navy] hover:opacity-75">
+          <Link href="/privacy" className="underline text-[var(--brand-navy)] hover:opacity-75">
             Политика конфиденциальности
           </Link>
         </p>

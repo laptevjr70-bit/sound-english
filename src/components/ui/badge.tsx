@@ -11,11 +11,11 @@ function Badge({ className, variant = 'default', ...props }: BadgeProps) {
       className={cn(
         'inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide',
         {
-          'default': 'bg-[--brand-sky] text-[--brand-navy]',
-          'navy': 'bg-[--brand-navy] text-white',
-          'lime': 'bg-[--brand-lime]/20 text-green-800',
-          'gold': 'bg-[--brand-gold]/20 text-yellow-800',
-          'red': 'bg-[--brand-red]/10 text-[--brand-red]',
+          'default': 'bg-[var(--brand-sky)] text-[var(--brand-navy)]',
+          'navy': 'bg-[var(--brand-navy)] text-white',
+          'lime': 'bg-[var(--brand-lime)]/20 text-green-800',
+          'gold': 'bg-[var(--brand-gold)]/20 text-yellow-800',
+          'red': 'bg-[var(--brand-red)]/10 text-[var(--brand-red)]',
         }[variant],
         className
       )}

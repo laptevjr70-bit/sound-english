@@ -5,7 +5,7 @@ const words = [...MARQUEE_WORDS, ...MARQUEE_WORDS]
 export function MarqueeSection() {
   return (
     <div
-      className="py-6 bg-[--brand-navy] overflow-hidden marquee-container"
+      className="py-6 bg-[var(--brand-navy)] overflow-hidden marquee-container"
       role="presentation"
     >
       {/* A11y: static list for screen readers */}

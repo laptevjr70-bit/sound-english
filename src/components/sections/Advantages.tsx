@@ -48,20 +48,20 @@ export function Advantages() {
           <div
             key={adv.title}
             data-adv
-            className="group flex gap-4 p-6 rounded-2xl border border-[--border] bg-white hover:-translate-y-1 transition-all duration-250"
+            className="group flex gap-4 p-6 rounded-2xl border border-[var(--border)] bg-white hover:-translate-y-1 transition-all duration-250"
             style={{ boxShadow: 'var(--shadow-card)' }}
           >
-            <div className="w-12 h-12 shrink-0 rounded-xl bg-[--brand-sky] flex items-center justify-center text-[--brand-navy] group-hover:bg-[--brand-navy] group-hover:text-white transition-colors duration-250">
+            <div className="w-12 h-12 shrink-0 rounded-xl bg-[var(--brand-sky)] flex items-center justify-center text-[var(--brand-navy)] group-hover:bg-[var(--brand-navy)] group-hover:text-white transition-colors duration-250">
               {iconMap[adv.icon]}
             </div>
             <div>
               <h3
-                className="font-semibold text-[--ink] mb-1"
+                className="font-semibold text-[var(--ink)] mb-1"
                 style={{ fontFamily: 'var(--font-fredoka)', fontSize: '1.1rem' }}
               >
                 {adv.title}
               </h3>
-              <p className="text-sm text-[--muted] leading-relaxed">{adv.body}</p>
+              <p className="text-sm text-[var(--muted)] leading-relaxed">{adv.body}</p>
             </div>
           </div>
         ))}
