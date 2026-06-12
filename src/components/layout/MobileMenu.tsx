@@ -45,7 +45,7 @@ export function MobileMenu({ open, onClose, onNavClick }: MobileMenuProps) {
               </div>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg hover:bg-[var(--brand-sky)] transition-colors"
+                className="flex items-center justify-center w-11 h-11 rounded-lg hover:bg-[var(--brand-sky)] transition-colors"
                 aria-label="Закрыть меню"
               >
                 <X className="w-5 h-5 text-[var(--ink)]" />
@@ -57,7 +57,7 @@ export function MobileMenu({ open, onClose, onNavClick }: MobileMenuProps) {
                 <button
                   key={link.href}
                   onClick={() => onNavClick(link.href)}
-                  className="text-left py-3 text-base font-medium text-[var(--ink)] hover:text-[var(--brand-navy)] border-b border-[var(--border)] transition-colors"
+                  className="text-left py-3.5 min-h-[44px] text-base font-medium text-[var(--ink)] hover:text-[var(--brand-navy)] border-b border-[var(--border)] transition-colors"
                 >
                   {link.label}
                 </button>

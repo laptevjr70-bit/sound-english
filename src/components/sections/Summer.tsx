@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -46,7 +46,13 @@ const ACTIVITY_CARDS = [
 export function Summer() {
   const ref = useRef<HTMLDivElement>(null)
   const lenis = useLenis()
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  // activeIndex: used on touch (tap toggle); hoveredIndex: used on pointer devices
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [isTouch, setIsTouch] = useState(false)
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(hover: none)').matches)
+  }, [])
 
   useGSAP(() => {
     if (!ref.current) return
@@ -66,6 +72,12 @@ export function Summer() {
   const scrollToContact = () => {
     const el = document.getElementById('contact')
     if (el && lenis) lenis.scrollTo(el, { offset: -80 })
+    else el?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleCardInteraction = (i: number) => {
+    if (!isTouch) return
+    setActiveIndex((prev) => (prev === i ? null : i))
   }
 
   return (
@@ -128,7 +140,7 @@ export function Summer() {
 
             <div data-reveal>
               <Button
-                className="bg-[var(--brand-red)] hover:bg-red-700 text-white font-bold shadow-lg"
+                className="bg-[var(--brand-red)] hover:bg-red-700 text-white font-bold shadow-lg min-h-[44px] px-6"
                 size="lg"
                 onClick={scrollToContact}
               >
@@ -137,34 +149,39 @@ export function Summer() {
             </div>
           </div>
 
-          {/* Activity cards with hover expand */}
+          {/* Activity cards — hover on desktop, tap on touch */}
           <div className="flex flex-col gap-6 items-center" data-reveal>
+            {isTouch && (
+              <p className="text-white/60 text-xs text-center -mb-2">Нажмите на карточку, чтобы узнать подробнее</p>
+            )}
             <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
               {ACTIVITY_CARDS.map((card, i) => {
-                const isHovered = hoveredIndex === i
-                const isOther = hoveredIndex !== null && !isHovered
+                const isActive = isTouch ? activeIndex === i : activeIndex === i
+                const isOther = activeIndex !== null && !isActive
+
                 return (
-                  <motion.div
+                  <motion.button
                     key={card.label}
+                    type="button"
+                    aria-expanded={isActive}
                     animate={{
-                      scale: isHovered ? 1.05 : isOther ? 0.95 : 1,
-                      x: isOther
-                        ? (i % 2 === 0 ? -6 : 6)
-                        : 0,
+                      scale: isActive ? 1.05 : isOther ? 0.95 : 1,
+                      x: isOther ? (i % 2 === 0 ? -6 : 6) : 0,
                       opacity: isOther ? 0.7 : 1,
                     }}
                     transition={{ type: 'spring', stiffness: 280, damping: 24 }}
-                    onHoverStart={() => setHoveredIndex(i)}
-                    onHoverEnd={() => setHoveredIndex(null)}
-                    className={`aspect-square rounded-2xl border bg-gradient-to-br ${card.color} flex flex-col items-center justify-start overflow-hidden cursor-default ${isHovered ? card.hoverBorder : 'border-white/20'}`}
-                    style={{ boxShadow: isHovered ? '0 8px 32px rgba(0,0,0,0.35)' : undefined }}
+                    onHoverStart={() => { if (!isTouch) setActiveIndex(i) }}
+                    onHoverEnd={() => { if (!isTouch) setActiveIndex(null) }}
+                    onClick={() => handleCardInteraction(i)}
+                    className={`aspect-square rounded-2xl border bg-gradient-to-br ${card.color} flex flex-col items-center justify-start overflow-hidden min-h-[44px] min-w-[44px] ${isActive ? card.hoverBorder : 'border-white/20'}`}
+                    style={{ boxShadow: isActive ? '0 8px 32px rgba(0,0,0,0.35)' : undefined }}
                   >
                     <div className="flex flex-col items-center justify-center flex-1 px-2 py-4">
                       <div className="text-3xl mb-2" aria-hidden="true">{card.emoji}</div>
                       <p className="text-white font-semibold text-sm">{card.label}</p>
                     </div>
                     <AnimatePresence>
-                      {isHovered && (
+                      {isActive && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
@@ -178,7 +195,7 @@ export function Summer() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </motion.div>
+                  </motion.button>
                 )
               })}
             </div>

@@ -1,13 +1,13 @@
 'use client'
 
 import { ReactLenis, useLenis } from 'lenis/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+function LenisSync() {
   const lenis = useLenis(() => ScrollTrigger.update())
 
   useEffect(() => {
@@ -20,8 +20,24 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     }
   }, [lenis])
 
+  return null
+}
+
+export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  const [isTouch, setIsTouch] = useState(false)
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(hover: none)').matches)
+  }, [])
+
+  // On touch devices use native scroll; GSAP ScrollTrigger still works via its own listener
+  if (isTouch) {
+    return <>{children}</>
+  }
+
   return (
     <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+      <LenisSync />
       {children}
     </ReactLenis>
   )

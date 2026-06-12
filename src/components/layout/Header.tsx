@@ -175,7 +175,7 @@ export function Header() {
             </Button>
 
             <button
-              className="lg:hidden p-2 rounded-lg hover:bg-[var(--brand-sky)] transition-colors shrink-0"
+              className="lg:hidden flex items-center justify-center w-11 h-11 rounded-lg hover:bg-[var(--brand-sky)] transition-colors shrink-0"
               onClick={() => setMenuOpen(true)}
               aria-label="Открыть меню"
               aria-expanded={menuOpen}

@@ -21,7 +21,9 @@ const onest = Onest({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_CONFIG.domain),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? process.env.URL ?? SITE_CONFIG.domain
+  ),
   title: {
     default: 'Sound English — детская студия английского языка в Воронеже',
     template: '%s | Sound English',
