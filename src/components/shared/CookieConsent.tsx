@@ -40,7 +40,7 @@ export function CookieConsent() {
         <p className="text-sm text-[var(--muted)] mb-4 leading-relaxed">
           Мы используем cookies для улучшения работы сайта. Технические cookies необходимы для его
           функционирования; аналитические — помогают нам его улучшать.{' '}
-          <Link href="/privacy" className="underline text-[var(--brand-navy)] hover:opacity-75">
+          <Link href="/privacy" target="_blank" rel="noopener noreferrer" className="underline text-[var(--brand-navy)] hover:opacity-75">
             Политика конфиденциальности
           </Link>
         </p>

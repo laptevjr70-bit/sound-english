@@ -1,8 +1,9 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion, AnimatePresence } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { Sun, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,9 +12,41 @@ import { SUMMER } from '@/lib/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const ACTIVITY_CARDS = [
+  {
+    label: 'Опыты',
+    emoji: '🔬',
+    color: 'from-purple-500/30 to-purple-700/40',
+    hoverBorder: 'border-purple-400/60',
+    description: 'Химия, физика и биология в действии. Дети проводят настоящие эксперименты: вулканы, кристаллы, оптические иллюзии.',
+  },
+  {
+    label: 'Кулинария',
+    emoji: '🍳',
+    color: 'from-orange-500/30 to-orange-700/40',
+    hoverBorder: 'border-orange-400/60',
+    description: 'Готовим блюда из разных стран. Пицца, суши, десерты — всё по рецептам на английском, с разбором слов.',
+  },
+  {
+    label: 'Прогулки',
+    emoji: '🌳',
+    color: 'from-green-500/30 to-green-700/40',
+    hoverBorder: 'border-green-400/60',
+    description: 'Парки, музеи, кинотеатры и кафе города. Каждый выход — маленькое приключение с заданиями на английском.',
+  },
+  {
+    label: 'Английский',
+    emoji: '📚',
+    color: 'from-blue-500/30 to-blue-700/40',
+    hoverBorder: 'border-blue-400/60',
+    description: 'Живые диалоги, игры, песни и фильмы. Язык погружается естественно — дети говорят, не замечая, что учатся.',
+  },
+]
+
 export function Summer() {
   const ref = useRef<HTMLDivElement>(null)
   const lenis = useLenis()
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   useGSAP(() => {
     if (!ref.current) return
@@ -104,24 +137,50 @@ export function Summer() {
             </div>
           </div>
 
-          {/* Visual */}
-          <div className="flex flex-col gap-6 items-center">
-            {/* Photo collage placeholder */}
-            {/* TODO: замените на реальные фото-коллаж из /public/photos/summer-*.jpg (~600×600px каждое) */}
+          {/* Activity cards with hover expand */}
+          <div className="flex flex-col gap-6 items-center" data-reveal>
             <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
-              {['Опыты', 'Кулинария', 'Прогулки', 'Английский'].map((label) => (
-                <div
-                  key={label}
-                  className="aspect-square rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center"
-                >
-                  <div className="text-center">
-                    <div className="text-3xl mb-2" aria-hidden="true">
-                      {label === 'Опыты' ? '🔬' : label === 'Кулинария' ? '🍳' : label === 'Прогулки' ? '🌳' : '📚'}
+              {ACTIVITY_CARDS.map((card, i) => {
+                const isHovered = hoveredIndex === i
+                const isOther = hoveredIndex !== null && !isHovered
+                return (
+                  <motion.div
+                    key={card.label}
+                    animate={{
+                      scale: isHovered ? 1.05 : isOther ? 0.95 : 1,
+                      x: isOther
+                        ? (i % 2 === 0 ? -6 : 6)
+                        : 0,
+                      opacity: isOther ? 0.7 : 1,
+                    }}
+                    transition={{ type: 'spring', stiffness: 280, damping: 24 }}
+                    onHoverStart={() => setHoveredIndex(i)}
+                    onHoverEnd={() => setHoveredIndex(null)}
+                    className={`aspect-square rounded-2xl border bg-gradient-to-br ${card.color} flex flex-col items-center justify-start overflow-hidden cursor-default ${isHovered ? card.hoverBorder : 'border-white/20'}`}
+                    style={{ boxShadow: isHovered ? '0 8px 32px rgba(0,0,0,0.35)' : undefined }}
+                  >
+                    <div className="flex flex-col items-center justify-center flex-1 px-2 py-4">
+                      <div className="text-3xl mb-2" aria-hidden="true">{card.emoji}</div>
+                      <p className="text-white font-semibold text-sm">{card.label}</p>
                     </div>
-                    <p className="text-white/60 text-xs">{label}</p>
-                  </div>
-                </div>
-              ))}
+                    <AnimatePresence>
+                      {isHovered && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: 'easeOut' }}
+                          className="overflow-hidden w-full"
+                        >
+                          <p className="text-white/90 text-xs leading-snug px-3 pb-3 text-center">
+                            {card.description}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )
+              })}
             </div>
             <div className="relative">
               <Mascot size={200} />

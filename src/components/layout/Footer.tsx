@@ -82,6 +82,8 @@ export function Footer() {
           </p>
           <Link
             href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-white/80 hover:text-white text-sm transition-colors underline underline-offset-4 font-medium"
           >
             Политика конфиденциальности

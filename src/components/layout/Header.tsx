@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'motion/react'
-import { Menu, Phone, ChevronDown, Send, MessageCircle } from 'lucide-react'
+import { Menu, Phone, ChevronDown, Copy, Check } from 'lucide-react'
 import { useLenis } from 'lenis/react'
 import { NAV_LINKS, SITE_CONFIG } from '@/lib/content'
 import { Button } from '@/components/ui/button'
@@ -36,6 +36,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [phoneOpen, setPhoneOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
   const phoneRef = useRef<HTMLDivElement>(null)
   const lenis = useLenis()
 
@@ -46,7 +47,6 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close phone dropdown on outside click / Escape
   useEffect(() => {
     if (!phoneOpen) return
     const onDown = (e: MouseEvent) => {
@@ -67,6 +67,13 @@ export function Header() {
     const el = document.getElementById(id)
     if (el && lenis) lenis.scrollTo(el, { offset: -90 })
     else if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const copyPhone = async () => {
+    await navigator.clipboard.writeText(SITE_CONFIG.phone)
+    setCopied(true)
+    setPhoneOpen(false)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -101,18 +108,18 @@ export function Header() {
           </nav>
 
           {/* CTA + phone + burger */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Phone dropdown */}
-            <div className="relative hidden md:block" ref={phoneRef}>
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {/* Phone button */}
+            <div className="relative hidden md:block shrink-0" ref={phoneRef}>
               <button
                 onClick={() => setPhoneOpen((v) => !v)}
                 aria-expanded={phoneOpen}
                 aria-haspopup="menu"
-                className="flex items-center gap-1.5 text-sm font-semibold text-[var(--brand-navy)] hover:text-[var(--brand-blue)] transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 text-sm font-semibold text-[var(--brand-navy)] hover:text-[var(--brand-blue)] transition-colors cursor-pointer whitespace-nowrap"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 shrink-0" />
                 <span className="hidden lg:inline">{SITE_CONFIG.phone}</span>
-                <ChevronDown className={cn('w-4 h-4 transition-transform', phoneOpen && 'rotate-180')} />
+                <ChevronDown className={cn('w-4 h-4 transition-transform shrink-0', phoneOpen && 'rotate-180')} />
               </button>
 
               <AnimatePresence>
@@ -123,56 +130,44 @@ export function Header() {
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.18, ease: 'easeOut' }}
                     role="menu"
-                    className="absolute right-0 mt-3 w-60 bg-white rounded-2xl shadow-xl border border-[var(--border)] p-2 z-40"
+                    className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-[var(--border)] p-2 z-40"
                   >
-                    <a
-                      href={SITE_CONFIG.phoneHref}
+                    <button
+                      onClick={copyPhone}
                       role="menuitem"
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--brand-sky)] transition-colors"
-                    >
-                      <span className="w-9 h-9 rounded-lg bg-[var(--brand-red)]/10 flex items-center justify-center text-[var(--brand-red)] shrink-0">
-                        <Phone className="w-4 h-4" />
-                      </span>
-                      <span>
-                        <span className="block text-sm font-semibold text-[var(--ink)]">Позвонить</span>
-                        <span className="block text-xs text-[var(--muted)]">{SITE_CONFIG.phone}</span>
-                      </span>
-                    </a>
-                    {/* TODO: вставить реальный username Telegram */}
-                    <a
-                      href={SITE_CONFIG.telegram}
-                      role="menuitem"
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--brand-sky)] transition-colors"
-                    >
-                      <span className="w-9 h-9 rounded-lg bg-[var(--brand-blue)]/10 flex items-center justify-center text-[var(--brand-blue)] shrink-0">
-                        <Send className="w-4 h-4" />
-                      </span>
-                      <span>
-                        <span className="block text-sm font-semibold text-[var(--ink)]">Telegram</span>
-                        <span className="block text-xs text-[var(--muted)]">Написать в Telegram</span>
-                      </span>
-                    </a>
-                    {/* TODO: вставить реальную ссылку на мессенджер Max */}
-                    <a
-                      href={SITE_CONFIG.max}
-                      role="menuitem"
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--brand-sky)] transition-colors"
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[var(--brand-sky)] transition-colors text-left"
                     >
                       <span className="w-9 h-9 rounded-lg bg-[var(--brand-navy)]/10 flex items-center justify-center text-[var(--brand-navy)] shrink-0">
-                        <MessageCircle className="w-4 h-4" />
+                        <Copy className="w-4 h-4" />
                       </span>
                       <span>
-                        <span className="block text-sm font-semibold text-[var(--ink)]">Max</span>
-                        <span className="block text-xs text-[var(--muted)]">Написать в мессенджер Max</span>
+                        <span className="block text-sm font-semibold text-[var(--ink)]">Скопировать номер</span>
+                        <span className="block text-xs text-[var(--muted)]">{SITE_CONFIG.phone}</span>
                       </span>
-                    </a>
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
+            {/* Copied toast */}
+            <AnimatePresence>
+              {copied && (
+                <motion.span
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.2 }}
+                  className="hidden md:flex items-center gap-1 text-xs font-semibold text-green-600 bg-green-50 border border-green-200 rounded-full px-3 py-1 shrink-0"
+                >
+                  <Check className="w-3.5 h-3.5" />
+                  Скопировано!
+                </motion.span>
+              )}
+            </AnimatePresence>
+
             <Button
-              className="hidden md:inline-flex bg-[var(--brand-red)] hover:bg-red-700 text-white"
+              className="hidden md:inline-flex bg-[var(--brand-red)] hover:bg-red-700 text-white shrink-0"
               size={scrolled ? 'sm' : 'default'}
               onClick={() => scrollTo('#contact')}
             >
@@ -180,7 +175,7 @@ export function Header() {
             </Button>
 
             <button
-              className="lg:hidden p-2 rounded-lg hover:bg-[var(--brand-sky)] transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-[var(--brand-sky)] transition-colors shrink-0"
               onClick={() => setMenuOpen(true)}
               aria-label="Открыть меню"
               aria-expanded={menuOpen}

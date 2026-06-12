@@ -3,9 +3,9 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion } from 'motion/react'
 import { Section } from '@/components/shared/Section'
 import { SectionHeading } from '@/components/shared/SectionHeading'
-import { Photo } from '@/components/shared/Photo'
 import { PROCESS_STEPS } from '@/lib/content'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -47,24 +47,17 @@ export function Process() {
         h2="Путь от первого урока до свободной речи"
       />
 
-      {/* Реальное фото: занятие у доски */}
-      <Photo
-        src="/photos/class.jpg"
-        alt="Занятие английским в студии Sound English"
-        aspect="aspect-[16/9] sm:aspect-[21/9]"
-        sizes="(max-width: 1200px) 92vw, 1136px"
-        className="mb-12 md:mb-14"
-      />
-
       <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {PROCESS_STEPS.map((step) => (
-          <div
+          <motion.div
             key={step.num}
             data-step
-            className="relative p-6 rounded-2xl border border-[var(--border)] bg-white transition-transform duration-200 hover:-translate-y-1"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+            className="relative p-6 rounded-2xl border border-[var(--border)] bg-white cursor-default"
             style={{ boxShadow: 'var(--shadow-card)' }}
           >
-            <div
+            <motion.div
               data-num
               className="text-5xl font-bold mb-4 leading-none inline-block origin-left"
               style={{
@@ -73,9 +66,14 @@ export function Process() {
                 WebkitTextStroke: '2px var(--brand-blue)',
               }}
               aria-hidden="true"
+              whileHover={{
+                color: 'var(--brand-red)',
+                scale: [1, 1.2, 0.95, 1.1, 1],
+                transition: { duration: 0.5, ease: 'easeOut' },
+              }}
             >
               {step.num}
-            </div>
+            </motion.div>
             <h3
               className="font-semibold text-[var(--ink)] mb-2"
               style={{ fontFamily: 'var(--font-fredoka)', fontSize: '1.1rem' }}
@@ -83,7 +81,7 @@ export function Process() {
               {step.title}
             </h3>
             <p className="text-sm text-[var(--muted)] leading-relaxed">{step.body}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </Section>
