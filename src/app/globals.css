@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* Brand CSS Variables */
+:root {
+  --brand-navy:   #143A8E;
+  --brand-blue:   #2A6FD6;
+  --brand-sky:    #E9F5FB;
+  --brand-red:    #E11D2E;
+  --brand-orange: #F08A3C;
+  --brand-gold:   #F5B81F;
+  --brand-lime:   #9BCF3C;
+  --ink:          #0E1B33;
+  --muted:        #5B6B86;
+  --surface:      #FFFFFF;
+  --border:       #E2EAF2;
+  --background:   #FFFFFF;
+  --foreground:   #0E1B33;
+  --radius:       0.75rem;
+  --shadow-card:  0 4px 24px 0 rgba(14, 27, 51, 0.06);
+  --shadow-hover: 0 8px 32px 0 rgba(14, 27, 51, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-red: var(--brand-red);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-lime: var(--brand-lime);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --font-sans: var(--font-onest), 'Manrope', system-ui, sans-serif;
+  --font-display: var(--font-fredoka), 'Nunito', sans-serif;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-onest), 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-navy);
+  outline-offset: 2px;
+}
+
+.card-base {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform 250ms ease-out, box-shadow 250ms ease-out;
+}
+
+.card-base:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-container:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation-play-state: paused;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.prose-brand h1, .prose-brand h2, .prose-brand h3 {
+  font-family: var(--font-fredoka), 'Nunito', sans-serif;
+  color: var(--ink);
+}
+.prose-brand a { color: var(--brand-navy); }
+.prose-brand table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.prose-brand th, .prose-brand td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; }
+.prose-brand th { background: var(--brand-sky); font-weight: 600; }
