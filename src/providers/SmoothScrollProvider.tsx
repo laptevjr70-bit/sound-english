@@ -15,23 +15,24 @@ function LenisSync() {
     const update = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(update)
     gsap.ticker.lagSmoothing(0)
-    return () => {
-      gsap.ticker.remove(update)
-    }
+    return () => { gsap.ticker.remove(update) }
   }, [lenis])
 
   return null
 }
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  // Start with Lenis enabled (SSR); disable on client if touch device
   const [isTouch, setIsTouch] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     setIsTouch(window.matchMedia('(hover: none)').matches)
   }, [])
 
-  // On touch devices use native scroll; GSAP ScrollTrigger still works via its own listener
-  if (isTouch) {
+  // On touch devices (after mount detection) skip Lenis for native scroll
+  if (mounted && isTouch) {
     return <>{children}</>
   }
 

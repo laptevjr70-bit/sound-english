@@ -76,6 +76,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru" className={`${fredoka.variable} ${onest.variable}`}>
       <head>
+        {/* Preload hero image — critical LCP resource */}
+        <link
+          rel="preload"
+          as="image"
+          href="/photos/hero.jpg"
+          // @ts-expect-error — fetchpriority not in React types yet
+          fetchpriority="high"
+          type="image/jpeg"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
